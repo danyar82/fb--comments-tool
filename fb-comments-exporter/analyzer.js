@@ -439,7 +439,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!res.ok) throw new Error(t('fetchError') || 'Failed to fetch');
         
         const resData = await res.json();
-        const blobId = resData.id;
+        const blobId = resData.key;
 
         if (blobId) {
             const shareUrl = VIEWER_BASE_URL + '?shared=' + blobId;

@@ -278,9 +278,10 @@
     function t(key) { return i18n[currentLang][key] || key; }
 
     function applyLang() {
-      document.documentElement.setAttribute('dir', i18n[currentLang].dir);
-      document.body.setAttribute('dir', i18n[currentLang].dir);
+      document.documentElement.dir = i18n[currentLang].dir;
+      document.body.dir = i18n[currentLang].dir;
       document.body.style.direction = i18n[currentLang].dir;
+      document.documentElement.setAttribute('dir', i18n[currentLang].dir);
       const langBtn = document.getElementById('langToggle');
       if (langBtn) langBtn.textContent = i18n[currentLang].langBtn;
       document.getElementById('mainTitle').textContent = t('mainTitle');
