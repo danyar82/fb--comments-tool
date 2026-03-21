@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شیکارکەری زانیارییەکان | FB Comments Exporter</title>
+  <link rel="stylesheet" href="analyzer.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <header class="header">
+      <div class="header-content">
+        <img src="icons/icon128.png" alt="logo" class="logo">
+        <div class="header-text">
+          <h1 id="mainTitle">شیکارکەری پێشکەوتووی CSV</h1>
+          <p class="subtitle" id="mainSubtitle">بەراوردکردن و شیکارکردنی چەندین فایل پێکەوە</p>
+        </div>
+      </div>
+      <button id="langToggle" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; color: white; padding: 6px 12px; font-weight: bold; cursor: pointer; transition: 0.2s;">EN</button>
+    </header>
+
+    <main class="main-content">
+      <div class="upload-section">
+        <div class="upload-zone" id="dropZone">
+          <div class="upload-icon">📁</div>
+          <h2>فایلەکانی CSV لێرە دابنێ</h2>
+          <p>یان کلیک بکە بۆ هەڵبژاردنی چەند فایلێک پێکەوە</p>
+          <input type="file" id="fileInput" multiple accept=".csv" class="file-input">
+        </div>
+        <div class="controls">
+          <label class="toggle-label">
+            <input type="checkbox" id="analyzeReplies" checked>
+            <span class="toggle-switch"></span>
+            <span class="toggle-text">وەڵامەکانیش حیساب بکە (Replies)</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="results-container hidden" id="resultsContainer">
+        <!-- Master Leaderboard -->
+        <section class="result-card master-card">
+          <div class="card-header no-print">
+            <h2>🏆 ڕیزبەندی گشتی (لە تەواوی فایلەکاندا)</h2>
+            <div class="stat-badge"><span id="totalCommentsStat">0</span> کۆمێنت</div>
+            <div class="stat-badge"><span id="totalFilesStat">0</span> فایل</div>
+            <div style="flex:1;"></div>
+            <button class="btn btn-export" id="shareLinkBtn" style="background:#4361ee; color:white; border-color:#4361ee; margin-inline-start:8px;">
+              <span class="btn-icon">🔗</span> پێدانی لینک
+            </button>
+            <button class="btn btn-export" id="exportMasterCsvBtn">
+              <span class="btn-icon">💾</span> بە فایلی CSV
+            </button>
+            <button class="btn btn-export" id="exportPdfBtn" style="background:var(--accent-blue);">
+              <span class="btn-icon">🖨️</span> خەزنکردن وەک PDF
+            </button>
+          </div>
+          
+          <div class="chart-container" id="chartContainer">
+            <!-- HTML/CSS Bar chart will be injected here -->
+          </div>
+
+          <div class="leaderboard-list" id="masterLeaderboard">
+            <!-- Filled dynamically -->
+          </div>
+        </section>
+
+        <!-- Individual Files Leaderboards -->
+        <section class="files-grid" id="filesGrid">
+          <!-- Filled dynamically -->
+        </section>
+      </div>
+
+    </main>
+  </div>
+  <!-- Custom fast CSV parser is built into analyzer.js -->
+  <script src="analyzer.js"></script>
+</body>
+</html>

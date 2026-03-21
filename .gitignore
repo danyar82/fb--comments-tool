@@ -1,0 +1,25 @@
+# Node
+node_modules/
+npm-debug.log*
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Build
+*.zip
+*.crx
+*.pem
+
+# Temp/Test
+test_blob.js
+
+# Dev docs (not needed in repo)
+README/
+sampleofextension/
+extension/
