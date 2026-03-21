@@ -427,7 +427,11 @@ document.addEventListener('DOMContentLoaded', () => {
            t: totalComments,
            n: parsedFiles.length || currentFilesSorted.length,
            m: currentMasterSorted.slice(0, 15),
-           f: currentFilesSorted
+           f: currentFilesSorted.map(file => ({
+               name: file.name,
+               total: file.total,
+               sorted: (file.sorted || []).slice(0, 15)
+           }))
         };
 
         const res = await fetch('https://api.npoint.io/bins', {
@@ -436,7 +440,10 @@ document.addEventListener('DOMContentLoaded', () => {
             body: JSON.stringify(exportData)
         });
         
-        if (!res.ok) throw new Error(t('fetchError') || 'Failed to fetch');
+        if (!res.ok) {
+            const errStatus = res.status;
+            throw new Error((t('fetchError') || 'Failed to fetch') + ' (Status: ' + errStatus + ')');
+        }
         
         const resData = await res.json();
         const blobId = resData.key;
