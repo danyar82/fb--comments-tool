@@ -426,11 +426,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const exportData = {
            t: totalComments,
            n: parsedFiles.length || currentFilesSorted.length,
-           m: currentMasterSorted.slice(0, 15),
+           m: currentMasterSorted.slice(0, 100),
            f: currentFilesSorted.map(file => ({
                name: file.name,
                total: file.total,
-               sorted: (file.sorted || []).slice(0, 15)
+               sorted: (file.sorted || []).slice(0, 100)
            }))
         };
 

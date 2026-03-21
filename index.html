@@ -290,6 +290,13 @@
       if (loadingText) loadingText.textContent = t('loading');
       const footer = document.querySelector('.footer');
       if (footer) footer.innerHTML = t('footer');
+      
+      // If we are showing an error/no-link message, re-render it
+      if (window._currentErrorKey) {
+          showError(t(window._currentErrorKey));
+      } else if (window._currentErrorRaw) {
+          showError(window._currentErrorRaw);
+      }
     }
 
     applyLang();
@@ -303,7 +310,10 @@
 
     const mainContent = document.getElementById('mainContent');
 
-    function showError(msg) {
+    function showError(msg, key) {
+      if (key) window._currentErrorKey = key;
+      else window._currentErrorRaw = msg;
+      
       mainContent.innerHTML = `
         <div class="error-container">
           <div class="error-icon">😕</div>
