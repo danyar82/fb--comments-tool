@@ -471,9 +471,18 @@
       }
 
       try {
-        const res = await fetch('https://jsonblob.com/api/jsonBlob/' + sharedId);
-        if (!res.ok) throw new Error(t('brokenLink'));
-        const data = await res.json();
+        let data;
+        let res = await fetch('https://api.npoint.io/' + sharedId);
+        
+        if (res.ok) {
+          data = await res.json();
+        } else {
+          // Fallback to jsonblob for older links
+          res = await fetch('https://jsonblob.com/api/jsonBlob/' + sharedId);
+          if (!res.ok) throw new Error(t('brokenLink'));
+          data = await res.json();
+        }
+        
         window._viewerData = data;
         detectAndRender(data);
       } catch (e) {

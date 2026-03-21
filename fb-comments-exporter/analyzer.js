@@ -430,7 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
            f: currentFilesSorted
         };
 
-        const res = await fetch('https://jsonblob.com/api/jsonBlob', {
+        const res = await fetch('https://api.npoint.io/', {
             method: 'POST',
             headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
             body: JSON.stringify(exportData)
@@ -438,9 +438,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (!res.ok) throw new Error(t('fetchError') || 'Failed to fetch');
         
-        const id = res.headers.get('x-jsonblob-id');
-        const loc = res.headers.get('Location');
-        const blobId = id || (loc ? loc.split('/').pop() : null);
+        const resData = await res.json();
+        const blobId = resData.id;
 
         if (blobId) {
             const shareUrl = VIEWER_BASE_URL + '?shared=' + blobId;
@@ -500,8 +499,11 @@ document.addEventListener('DOMContentLoaded', () => {
           if (dzTitle) dzTitle.innerText = t('fetchingData');
           
           try {
-              const res = await fetch('https://jsonblob.com/api/jsonBlob/' + sharedId);
-              if (!res.ok) throw new Error(t('fetchingError'));
+              let res = await fetch('https://api.npoint.io/' + sharedId);
+              if (!res.ok) {
+                  res = await fetch('https://jsonblob.com/api/jsonBlob/' + sharedId);
+                  if (!res.ok) throw new Error(t('fetchingError'));
+              }
               const data = await res.json();
               if (data.parsedFiles) {
                   parsedFiles = data.parsedFiles;

@@ -4,7 +4,7 @@
   "description": "Export Facebook post comments & replies to CSV — Free & Unlimited",
   "version": "1.0.0",
   "permissions": ["activeTab", "scripting", "notifications", "storage"],
-  "host_permissions": ["https://jsonblob.com/*"],
+  "host_permissions": ["https://jsonblob.com/*", "https://api.npoint.io/*"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
