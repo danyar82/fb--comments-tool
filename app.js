@@ -916,7 +916,7 @@
     }
 
     // ===== Share Link =====
-    const VIEWER_BASE_URL = 'https://danyar82.github.io/fb-comments-tool/viewer.html';
+    const VIEWER_BASE_URL = 'https://danyar82.github.io/fb--comments-tool/viewer.html';
 
     els.shareLink?.addEventListener('click', async () => {
         const sortedArray = Object.entries(state.totals).sort((a, b) => b[1].count - a[1].count);

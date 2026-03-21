@@ -45,6 +45,7 @@
     "ku": {
       langBtn: "EN",
       dir: "rtl",
+      titleMain: "شیکارکەری کۆمێنتەکانی فەیسبوک",
       subtitle: "هەناردەکردنی کۆمێنتەکان — <strong>دانیار گروپ</strong>",
       freeBadge: "بەخۆڕایی ♾️",
       wait: "چاوەڕوان بە...",
@@ -110,6 +111,7 @@
     "en": {
       langBtn: "KU",
       dir: "ltr",
+      titleMain: "FB Comments Exporter",
       subtitle: "Export Facebook Comments — <strong>Danyar Group</strong>",
       freeBadge: "Free ♾️",
       wait: "Please wait...",
@@ -185,8 +187,11 @@
   function applyTranslation() {
     langToggle.textContent = i18n[currentLang].langBtn;
     document.documentElement.dir = i18n[currentLang].dir;
+    document.body.dir = i18n[currentLang].dir;
     
     // Header
+    const titleMain = document.querySelector(".header-text h1");
+    if (titleMain) titleMain.textContent = t("titleMain");
     const subtitle = document.querySelector(".header-text .subtitle");
     if (subtitle) subtitle.innerHTML = t("subtitle");
     const badge = document.querySelector(".header .badge");

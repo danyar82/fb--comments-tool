@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let parsedFiles = []; // Array of objects: { name, rows }
 
   // ===== i18n =====
-  let currentLang = localStorage.getItem('fbceLang') || 'ku';
+  let currentLang = 'ku';
   const i18n = {
       "ku": {
           langBtn: "EN",
@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const langToggle = document.getElementById('langToggle');
       if (langToggle) langToggle.textContent = i18n[currentLang].langBtn;
       document.documentElement.dir = i18n[currentLang].dir;
+      document.body.dir = i18n[currentLang].dir;
 
       document.getElementById('mainTitle').textContent = t('mainTitle');
       document.getElementById('mainSubtitle').textContent = t('mainSubtitle');
@@ -119,12 +120,24 @@ document.addEventListener('DOMContentLoaded', () => {
       }
   }
 
-  applyTranslation();
+  // Wait for chrome storage to sync language
+  if (typeof chrome !== 'undefined' && chrome.storage) {
+      chrome.storage.local.get(['fbceLang'], function(result) {
+          if (result.fbceLang) currentLang = result.fbceLang;
+          applyTranslation();
+      });
+  } else {
+      currentLang = localStorage.getItem('fbceLang') || 'ku';
+      applyTranslation();
+  }
   
   const langToggle = document.getElementById('langToggle');
   if (langToggle) {
       langToggle.addEventListener('click', () => {
           currentLang = currentLang === 'ku' ? 'en' : 'ku';
+          if (typeof chrome !== 'undefined' && chrome.storage) {
+              chrome.storage.local.set({fbceLang: currentLang});
+          }
           localStorage.setItem('fbceLang', currentLang);
           applyTranslation();
       });
@@ -394,7 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ===== Share Link =====
-  const VIEWER_BASE_URL = 'https://danyar82.github.io/fb-comments-tool/viewer.html';
+  const VIEWER_BASE_URL = 'https://danyar82.github.io/fb--comments-tool/viewer.html';
 
   document.getElementById('shareLinkBtn')?.addEventListener('click', async () => {
     if(currentMasterSorted.length === 0) {

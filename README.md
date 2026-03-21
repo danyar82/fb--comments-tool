@@ -29,7 +29,7 @@ Supports **Kurdish (Sorani)** 🇮🇶 and **English** 🇬🇧 bilingual interf
 
 1. Download or clone this repository:
    ```bash
-   git clone https://github.com/danyar82/fb-comments-tool.git
+   git clone https://github.com/danyar82/fb--comments-tool.git
    ```
 2. Open Chrome and go to `chrome://extensions/`
 3. Enable **Developer mode** (toggle in top-right)
