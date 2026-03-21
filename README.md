@@ -88,7 +88,7 @@ fb-comments-tool/
 ├── index.html              # Standalone web tool
 ├── app.js                  # Standalone app logic
 ├── style.css               # Standalone styles
-├── viewer.html             # Shared results viewer
+├── index.html              # Shared results viewer & Landing page
 ├── screenshot.png          # README screenshot
 ├── fb-comments-exporter/   # Chrome Extension
 │   ├── manifest.json       # Extension manifest (MV3)

@@ -36,9 +36,11 @@ body {
   color: var(--text-primary);
   width: 380px;
   min-height: 200px;
-  direction: rtl;
   overflow-x: hidden;
 }
+
+body.rtl { direction: rtl; }
+body.ltr { direction: ltr; }
 
 .container {
   padding: 0 0 12px 0;

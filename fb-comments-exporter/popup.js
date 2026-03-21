@@ -186,8 +186,9 @@
 
   function applyTranslation() {
     langToggle.textContent = i18n[currentLang].langBtn;
-    document.documentElement.dir = i18n[currentLang].dir;
-    document.body.dir = i18n[currentLang].dir;
+    document.documentElement.setAttribute('dir', i18n[currentLang].dir);
+    document.body.setAttribute('dir', i18n[currentLang].dir);
+    document.body.className = i18n[currentLang].dir;
     
     // Header
     const titleMain = document.querySelector(".header-text h1");

@@ -407,7 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ===== Share Link =====
-  const VIEWER_BASE_URL = 'https://danyar82.github.io/fb--comments-tool/viewer.html';
+  const VIEWER_BASE_URL = 'https://danyar82.github.io/fb--comments-tool/index.html';
 
   document.getElementById('shareLinkBtn')?.addEventListener('click', async () => {
     if(currentMasterSorted.length === 0) {
@@ -430,7 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
            f: currentFilesSorted
         };
 
-        const res = await fetch('https://api.npoint.io/', {
+        const res = await fetch('https://api.npoint.io/bins', {
             method: 'POST',
             headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
             body: JSON.stringify(exportData)
