@@ -54,6 +54,24 @@
             <button class="btn btn-export" id="exportPdfBtn" style="background:var(--accent-blue);">
               <span class="btn-icon">🖨️</span> خەزنکردن وەک PDF
             </button>
+            <button class="btn" id="openSettingsBtn" style="background:#555; margin-inline-start:8px;">
+               <span class="btn-icon">⚙️</span>
+            </button>
+          </div>
+
+          <!-- Supabase Settings Modal -->
+          <div id="settingsModal" class="modal hidden" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; display:none; align-items:center; justify-content:center;">
+             <div class="modal-content" style="background:#1a1a2e; padding:30px; border-radius:16px; width:400px; border:1px solid #4361ee; direction:ltr; text-align:left;">
+                <h3 style="margin-bottom:20px; color:#fff;">Supabase Settings</h3>
+                <label style="display:block; margin-bottom:10px; color:#aaa; font-size:12px;">Project URL</label>
+                <input type="text" id="sbUrl" placeholder="https://xyz.supabase.co" style="width:100%; padding:10px; background:#0a0a1a; border:1px solid #333; color:#fff; border-radius:8px; margin-bottom:20px;">
+                <label style="display:block; margin-bottom:10px; color:#aaa; font-size:12px;">Anon Key</label>
+                <input type="password" id="sbKey" placeholder="your-anon-key" style="width:100%; padding:10px; background:#0a0a1a; border:1px solid #333; color:#fff; border-radius:8px; margin-bottom:20px;">
+                <div style="display:flex; gap:10px; justify-content:flex-end;">
+                   <button class="btn" id="saveSettingsBtn" style="background:#4361ee;">Save</button>
+                   <button class="btn" id="closeSettingsBtn" style="background:#444;">Close</button>
+                </div>
+             </div>
           </div>
           
           <div class="chart-container" id="chartContainer">
@@ -74,6 +92,7 @@
     </main>
   </div>
   <!-- Custom fast CSV parser is built into analyzer.js -->
+  <script src="lz-string.min.js"></script>
   <script src="analyzer.js"></script>
 </body>
 </html>

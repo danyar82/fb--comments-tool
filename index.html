@@ -217,6 +217,7 @@
     </footer>
   </div>
 
+  <script src="lz-string.min.js"></script>
   <script>
   (function() {
     'use strict';
@@ -462,7 +463,14 @@
     async function loadData() {
       const params = new URLSearchParams(window.location.search);
       const sharedId = params.get('shared');
+      const sbId = params.get('sb');
       const b64 = params.get('d');
+
+      // 1. Check if data is already injected (Standalone HTML)
+      if (window._viewerData) {
+          detectAndRender(window._viewerData);
+          return;
+      }
 
       if (b64) {
         try {
@@ -475,6 +483,34 @@
           showError(t('badData'));
         }
         return;
+      }
+
+      if (sbId) {
+          // Supabase load
+          try {
+              const settings = JSON.parse(localStorage.getItem('fbce_settings') || '{}');
+              if (!settings.sbUrl || !settings.sbKey) {
+                  showError("سەبەمەیتی سەبا بەیس چالاک نەکراوە بۆ ئەوەی ئەم لینکە کرابێتەوە. (Supabase not configured)");
+                  return;
+              }
+              const res = await fetch(`${settings.sbUrl}/rest/v1/shares?id=eq.${sbId}&select=data`, {
+                  headers: {
+                      'apikey': settings.sbKey,
+                      'Authorization': `Bearer ${settings.sbKey}`
+                  }
+              });
+              if (!res.ok) throw new Error('Supabase Error: ' + res.status);
+              const resData = await res.json();
+              if (resData[0]?.data) {
+                  window._viewerData = resData[0].data;
+                  detectAndRender(window._viewerData);
+              } else {
+                  throw new Error('Data not found');
+              }
+          } catch(e) {
+              showError(t('fetchError') + e.message);
+          }
+          return;
       }
 
       if (!sharedId) {
