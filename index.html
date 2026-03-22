@@ -489,14 +489,17 @@
           // Supabase load
           try {
               const settings = JSON.parse(localStorage.getItem('fbce_settings') || '{}');
-              if (!settings.sbUrl || !settings.sbKey) {
+              const sbUrl = settings.sbUrl || 'https://qnmwdsigshpsshhdtkls.supabase.co';
+              const sbKey = settings.sbKey || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFubXdkc2lnc2hwc3NoaGR0a2xzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQxNjkyNjEsImV4cCI6MjA4OTc0NTI2MX0.7WAtA0Gzk1pIfOirzO1ahiFmDuJRsXJdZ1jsV4Z4P6w';
+
+              if (!sbUrl || !sbKey) {
                   showError("سەبەمەیتی سەبا بەیس چالاک نەکراوە بۆ ئەوەی ئەم لینکە کرابێتەوە. (Supabase not configured)");
                   return;
               }
-              const res = await fetch(`${settings.sbUrl}/rest/v1/shares?id=eq.${sbId}&select=data`, {
+              const res = await fetch(`${sbUrl}/rest/v1/shares?id=eq.${sbId}&select=data`, {
                   headers: {
-                      'apikey': settings.sbKey,
-                      'Authorization': `Bearer ${settings.sbKey}`
+                      'apikey': sbKey,
+                      'Authorization': `Bearer ${sbKey}`
                   }
               });
               if (!res.ok) throw new Error('Supabase Error: ' + res.status);
