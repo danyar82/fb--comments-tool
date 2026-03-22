@@ -234,6 +234,9 @@
         noData: "هیچ داتایەک نییە",
         unknown: "(نەناسراو)",
         comments: "کۆمێنت",
+        copied: "کۆپی کرا! ✔",
+        settingsSaved: "ڕێکخستنەکان خەزن کران",
+        showMore: "زیاتر (Show More)",
         files: "فایل",
         totalComments: "کۆی کۆمێنتەکان",
         totalPeople: "ژمارەی کەسەکان",
@@ -258,6 +261,9 @@
         errorTitle: "Could not load data",
         noData: "No data available",
         unknown: "(Unknown)",
+        copied: "Copied! ✔",
+        settingsSaved: "Settings saved successfully",
+        showMore: "Show More",
         comments: "Comments",
         files: "Files",
         totalComments: "Total Comments",
@@ -377,6 +383,8 @@
     // ===== Render Analyzer-style data (from analyzer.js) =====
     function renderAnalyzerData(data) {
       let html = '';
+      const top10 = data.m.slice(0, 10);
+      const hasMore = data.m.length > 10;
 
       // Master card
       html += `<section class="result-card master-card">
@@ -387,20 +395,29 @@
           <div style="flex:1;"></div>
           <button class="btn no-print" onclick="window.print()">${t('savePdf')}</button>
         </div>
-        ${renderChart(data.m)}
-        <div class="leaderboard-list">${generateRowsHTML(data.m)}</div>
+        ${renderChart(top10)}
+        <div class="leaderboard-list" id="masterList">${generateRowsHTML(top10)}</div>
+        ${hasMore ? `<button class="btn no-print" style="width:100%; margin-top:15px; background:rgba(255,255,255,0.05);" id="showMoreMaster">👇 ${t('showMore')}</button>` : ''}
       </section>`;
 
       // Individual file cards
       if (data.f && data.f.length > 0) {
         html += '<section class="files-grid">';
         data.f.forEach(f => {
-          html += renderFileCard(f.name, f.total || 0, f.sorted);
+          html += renderFileCard(f.name, f.total || 0, (f.sorted || []).slice(0, 10));
         });
         html += '</section>';
       }
 
       mainContent.innerHTML = html;
+
+      // Add listener
+      if (hasMore) {
+          document.getElementById('showMoreMaster').onclick = (e) => {
+              document.getElementById('masterList').innerHTML = generateRowsHTML(data.m);
+              e.target.remove();
+          };
+      }
     }
 
     // ===== Render App-style data (from app.js) =====
@@ -410,6 +427,8 @@
         .map(([id, val]) => ({ id, name: val.name, count: val.count }))
         .sort((a, b) => b.count - a.count);
 
+      const top10 = sorted.slice(0, 10);
+      const hasMore = sorted.length > 10;
       const totalComments = sorted.reduce((s, v) => s + v.count, 0);
       let html = '';
 

@@ -38,7 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
       copied: "کۆپی کرا! ✔",
       shareSuccessAlert: "لینکەکە کۆپی کرا! ✔\nئێستا دەتوانیت بینێریت بۆ هەر کەسێک و لە هەر براوسەرێک کاردەکات.",
       settingsSaved: "ڕێکخستنەکان خەزن کران",
-      standaloneExport: "خەزنکردن وەک لاپەڕەی سەربەخۆ (HTML)"
+      standaloneExport: "خەزنکردن وەک لاپەڕەی سەربەخۆ (HTML)",
+      showMore: "زیاتر (Show More)"
     },
     "en": {
       langBtn: "KU",
@@ -68,7 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
       copied: "Copied! ✔",
       shareSuccessAlert: "Link copied! ✔\nYou can now share it with anyone.",
       settingsSaved: "Settings saved successfully",
-      standaloneExport: "Export as Standalone Page (HTML)"
+      standaloneExport: "Export as Standalone Page (HTML)",
+      showMore: "Show More"
     }
   };
 
@@ -440,10 +442,31 @@ document.addEventListener('DOMContentLoaded', () => {
     filesGrid.appendChild(section);
   }
 
-  function renderMasterLeaderboard(sortedData, totalComments, numFiles) {
-    document.getElementById('totalCommentsStat').textContent = totalComments.toLocaleString('en-US');
-    document.getElementById('totalFilesStat').textContent = numFiles;
-    document.getElementById('masterLeaderboard').innerHTML = generateRowsHTML(sortedData);
+  function renderMasterLeaderboard(sortedData, totalComments, fileCount) {
+    const masterCard = document.querySelector('.master-card');
+    masterCard.classList.remove('hidden');
+
+    document.getElementById('totalCommentsStat').textContent = totalComments.toLocaleString();
+    document.getElementById('totalFilesStat').textContent = fileCount.toLocaleString();
+
+    const lbContainer = masterCard.querySelector('.leaderboard-list');
+    
+    // Initial render: show only 10
+    const top10 = sortedData.slice(0, 10);
+    lbContainer.innerHTML = generateRowsHTML(top10);
+
+    // Add "Show More" if there's more
+    if (sortedData.length > 10) {
+      const showMoreBtn = document.createElement('button');
+      showMoreBtn.className = 'show-more-btn';
+      showMoreBtn.style.cssText = 'width:100%; padding:10px; margin-top:10px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--text-primary); cursor:pointer; border-radius:8px; font-weight:bold; transition: 0.3s;';
+      showMoreBtn.textContent = '👇 ' + t('showMore');
+      showMoreBtn.onclick = () => {
+          lbContainer.innerHTML = generateRowsHTML(sortedData);
+          showMoreBtn.remove();
+      };
+      lbContainer.appendChild(showMoreBtn);
+    }
   }
 
   // ===== Share Link =====
